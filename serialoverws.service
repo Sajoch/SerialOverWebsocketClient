@@ -1,0 +1,12 @@
+[Unit]
+Description=Serial client over Websocket
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/app
+ExecStart=usr/bin/env dotnet SerialOverWebsocketClient.dll
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
