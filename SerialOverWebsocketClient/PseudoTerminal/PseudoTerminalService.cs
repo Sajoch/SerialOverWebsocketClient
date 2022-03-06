@@ -12,8 +12,7 @@ public class PseudoTerminalService : IDisposable
         this.serialPort = serialPort;
         this.switchPort = switchPort;
 
-        Console.WriteLine($"SerialPort: {serialPort.Filename}");
-        Console.WriteLine($"SwitchPort: {switchPort.Filename}");
+        File.WriteAllText("env", @$"SERIAL={serialPort.Filename}\nSWTICH={switchPort.Filename}\n");
 
         serialPort.OnRead += OnSerialPortRead;
         switchPort.OnRead += OnSwitchPortRead;

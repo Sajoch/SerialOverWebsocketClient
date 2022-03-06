@@ -9,7 +9,7 @@ using Serilog;
 
 var builder = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json");
+    .AddJsonFile("Settings/appsettings.json");
 
 var configuration = builder.Build();
 
