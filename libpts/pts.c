@@ -7,14 +7,15 @@
 #include <unistd.h>
 
 int CreatePTY(int* master, int* slave) {
-  master = posix_openpt(O_RDWR | O_NOCTTY);
-  if (master == 0) return -1;
-  if (grantpt(master) == -1) return -1;
-  if (unlockpt(master) == -1) return -1;
+  int fd = posix_openpt(O_RDWR | O_NOCTTY);
+  if (fd == 0) return -1;
+  if (grantpt(fd) == -1) return -1;
+  if (unlockpt(fd) == -1) return -1;
   struct termios termCtl;
-  tcgetattr(*master, &termCtl);
+  tcgetattr(fd, &termCtl);
   cfmakeraw(&termCtl);
-  tcsetattr(*master, TCSANOW, &termCtl);
+  tcsetattr(fd, TCSANOW, &termCtl);
+  *master = fd;
   return 0;
 }
 
