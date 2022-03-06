@@ -7,8 +7,10 @@
 #include <unistd.h>
 
 int CreatePTY(int* master, int* slave) {
-  int result = openpty(master, slave, NULL, NULL, NULL);
-  if (result != 0) return result;
+  master = posix_openpt(O_RDWR | O_NOCTTY);
+  if (master == 0) return -1;
+  if (grantpt(master) == -1) return -1;
+  if (unlockpt(master) == -1) return -1;
   struct termios termCtl;
   tcgetattr(*master, &termCtl);
   cfmakeraw(&termCtl);
