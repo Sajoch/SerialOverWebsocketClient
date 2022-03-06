@@ -26,5 +26,5 @@ WORKDIR /app
 COPY --from=builder-pts /app/libpts.so ./
 COPY --from=builder /app/out/*.dll ./
 COPY --from=builder /app/out/*.runtimeconfig.json ./
-COPY --from=builder /app/out/Settings ./Settings
+COPY --from=builder /app/out/appsettings.json ./Settings/appsettings.json
 ENTRYPOINT ["dotnet", "SerialOverWebsocketClient.dll"]

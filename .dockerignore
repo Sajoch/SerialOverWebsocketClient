@@ -1,0 +1,6 @@
+﻿.git/
+.gitignore/
+bin/
+obj/
+*.o
+docker-compose.yml
