@@ -54,14 +54,9 @@ class PosixPseudoTerminal : IPseudoTerminal
         while (true)
         {
             var read = ReadPTY(fileHandle, buffer, buffer.Length);
-            if (read == -1)
-            {
-                await Task.Delay(100);
-            }
-            else
-            {
+            if (read != -1)
                 OnRead?.Invoke(buffer, read);
-            }
+            await Task.Delay(100);
         }
     }
 }
