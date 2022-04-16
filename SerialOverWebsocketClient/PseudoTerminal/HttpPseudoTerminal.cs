@@ -14,7 +14,6 @@ public class HttpPseudoTerminal : IPseudoTerminal
     {
         var port = 8000 + index;
         Filename = $"http://localhost:{port}/";
-        listener.Prefixes.Add(Filename);
         listener.Prefixes.Add($"http://*:{port}/");
         listener.Start();
 
