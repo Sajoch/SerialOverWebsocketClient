@@ -19,10 +19,7 @@ services.AddSingleton<Startup>();
 services.AddSingleton<RemoteSerialService>();
 services.AddSingleton<AuthorizationService>();
 
-if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-    services.AddTransient<IPseudoTerminal, PosixPseudoTerminal>();
-else
-    services.AddTransient<IPseudoTerminal, DummyPseudoTerminal>();
+services.AddTransient<IPseudoTerminal, TcpPseudoTerminal>();
 
 services.AddSingleton<PseudoTerminalService>();
 

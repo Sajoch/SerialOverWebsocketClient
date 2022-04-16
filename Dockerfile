@@ -1,14 +1,3 @@
-# Build helper lib libpts
-FROM ubuntu as builder-pts
-RUN apt update && apt upgrade -y
-
-RUN apt install -y gcc make
-
-WORKDIR /app
-
-COPY libpts/* ./
-RUN make all
-
 # Build CS project
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS builder
 WORKDIR /app
@@ -23,7 +12,6 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/runtime:6.0 AS runner
 WORKDIR /app
 
-COPY --from=builder-pts /app/libpts.so ./
 COPY --from=builder /app/out/*.dll ./
 COPY --from=builder /app/out/*.runtimeconfig.json ./
 COPY --from=builder /app/out/appsettings.json ./Settings/appsettings.json

@@ -11,9 +11,11 @@ public class PseudoTerminalService : IDisposable
     {
         this.serialPort = serialPort;
         this.switchPort = switchPort;
+        serialPort.Start(0);
+        switchPort.Start(1);
 
-        File.WriteAllText("env/serial", serialPort.Filename);
-        File.WriteAllText("env/switch", switchPort.Filename);
+        //File.WriteAllText("env/serial", serialPort.Filename);
+        //File.WriteAllText("env/switch", switchPort.Filename);
 
         serialPort.OnRead += OnSerialPortRead;
         switchPort.OnRead += OnSwitchPortRead;

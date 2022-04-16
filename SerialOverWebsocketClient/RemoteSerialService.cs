@@ -36,6 +36,7 @@ public class RemoteSerialService
 
     public void WriteSerialData(string value)
     {
+        Console.WriteLine($">%{value}%\n");
         session.WriteData(value);
     }
 
@@ -51,7 +52,7 @@ public class RemoteSerialService
 
     private void SocketOnData(string value)
     {
-        //Console.WriteLine(value);
+        Console.WriteLine($"<%{value}%\n");
         OnSerialData?.Invoke(value);
     }
 

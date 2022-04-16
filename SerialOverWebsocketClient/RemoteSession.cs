@@ -42,6 +42,7 @@ class RemoteSession
 
     public void WriteData(string value)
     {
+        //using var timer = new PerformanceOperation("WriteData {0}ms"); 
         var bytes = Encoding.UTF8.GetBytes(value);
         var encoded = Convert.ToBase64String(bytes);
         SendMessage(new WriteMessage {Data = encoded});
@@ -72,6 +73,7 @@ class RemoteSession
 
     private void SendMessage<T>(T message) where T : SessionMessage
     {
+        //using var timer = new PerformanceOperation("SendMessage {0}ms"); 
         var data = JsonSerializer.Serialize(message);
         socket.Send(data);
     }
@@ -93,6 +95,7 @@ class RemoteSession
 
     private bool DeserializeMessage(string data)
     {
+        //using var timer = new PerformanceOperation("DeserializeMessage {0}ms"); 
         var basicMessage = JsonSerializer.Deserialize<BasicSessionMessage>(data);
         if (basicMessage == null)
             return false;
@@ -153,6 +156,7 @@ class RemoteSession
 
     private void OnReadMessage(ReadMessage message)
     {
+        //using var timer = new PerformanceOperation("OnReadMessage {0}ms");
         var bytes = Convert.FromBase64String(message.Data);
         var data = Encoding.UTF8.GetString(bytes);
         OnData?.Invoke(data);
