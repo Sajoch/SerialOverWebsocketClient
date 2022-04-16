@@ -6,7 +6,7 @@ namespace SerialOverWebsocketClient.PseudoTerminal;
 public class TcpPseudoTerminal : IPseudoTerminal
 {
     public event Action<byte[], int> OnRead;
-    private readonly IPAddress ipAddress = IPAddress.Loopback;
+    private readonly IPAddress ipAddress = IPAddress.Any;
     private TcpListener listener;
     private readonly List<NetworkStream> clients = new();
 
@@ -65,7 +65,7 @@ public class TcpPseudoTerminal : IPseudoTerminal
         {
             await ReadClientData(stream);
         }
-        catch
+        finally
         {
             clients.Remove(stream);
             client.Close();
@@ -78,8 +78,9 @@ public class TcpPseudoTerminal : IPseudoTerminal
         while (stream.CanRead)
         {
             var result = await stream.ReadAsync(buffer, 0, buffer.Length);
-            if (result > 0)
-                OnRead?.Invoke(buffer, result);
+            if (result <= 0)
+                return;
+            OnRead?.Invoke(buffer, result);
         }
     }
 }
