@@ -1,11 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using System.Runtime.InteropServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SerialOverWebsocketClient;
 using SerialOverWebsocketClient.PseudoTerminal;
-using Serilog;
 
 var builder = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -25,12 +23,6 @@ services.AddSingleton<PseudoTerminalService>();
 
 services.Configure<AuthorizationOptions>(configuration.GetSection("Authorization"));
 services.Configure<ConnectionOptions>(configuration.GetSection("Remote"));
-
-var logger = new LoggerConfiguration()
-    .WriteTo.Console()
-    .CreateLogger();
-
-services.AddSingleton(logger);
 
 var serviceProvider = services.BuildServiceProvider(true);
 var startup = serviceProvider.GetRequiredService<Startup>();
