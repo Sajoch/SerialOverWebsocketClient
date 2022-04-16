@@ -59,6 +59,7 @@ public class TcpPseudoTerminal : IPseudoTerminal
 
     private async Task HandleClient(TcpClient client)
     {
+        Console.WriteLine("New connection");
         var stream = client.GetStream();
         clients.Add(stream);
         try
@@ -67,6 +68,7 @@ public class TcpPseudoTerminal : IPseudoTerminal
         }
         finally
         {
+            Console.WriteLine("Close connection");
             clients.Remove(stream);
             client.Close();
         }
@@ -80,6 +82,8 @@ public class TcpPseudoTerminal : IPseudoTerminal
             var result = await stream.ReadAsync(buffer, 0, buffer.Length);
             if (result <= 0)
                 return;
+            
+            Console.WriteLine($"Data {result}");
             OnRead?.Invoke(buffer, result);
         }
     }

@@ -17,7 +17,8 @@ services.AddSingleton<Startup>();
 services.AddSingleton<RemoteSerialService>();
 services.AddSingleton<AuthorizationService>();
 
-services.AddTransient<IPseudoTerminal, TcpPseudoTerminal>();
+services.AddTransient<TcpPseudoTerminal>();
+services.AddTransient<HttpPseudoTerminal>();
 
 services.AddSingleton<PseudoTerminalService>();
 

@@ -7,7 +7,7 @@ public class PseudoTerminalService : IDisposable
     private readonly IPseudoTerminal serialPort;
     private readonly IPseudoTerminal switchPort;
 
-    public PseudoTerminalService(IPseudoTerminal serialPort, IPseudoTerminal switchPort)
+    public PseudoTerminalService(TcpPseudoTerminal serialPort, HttpPseudoTerminal switchPort)
     {
         this.serialPort = serialPort;
         this.switchPort = switchPort;
